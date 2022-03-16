@@ -1,0 +1,17 @@
+[Unit]
+Description= SoM service
+After=network.target
+
+[Service]
+Type=oneshot
+User=som
+Group=som
+PermissionsStartOnly=true
+RemainAfterExit=yes
+ExecStartPre=-/bin/mkdir -p /var/run/som
+ExecStartPre=/bin/chown -R som:som /var/run/som/
+ExecStart=/usr/lib/karbo/krbd.sh --start
+ExecStop=/usr/lib/karbo/krbd.sh --stop
+
+[Install]
+WantedBy=multi-user.target
